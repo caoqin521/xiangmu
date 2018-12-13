@@ -24,30 +24,15 @@
                         @endif
                             <div class="header">
                                 <h2>
-                                    WITH MATERIAL DESIGN COLORS
-                                    <small>You can use material design colors which examples are <code>.bg-pink</code></small>
+                                    分类列表
                                 </h2>
-                                <ul class="header-dropdown m-r--5">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-                                            <i class="material-icons">more_vert</i>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="javascript:void(0);">Action</a></li>
-                                            <li><a href="javascript:void(0);">Another action</a></li>
-                                            <li><a href="javascript:void(0);">Something else here</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                
                             </div>
                             <div class="body table-responsive">
-                                <table class="table table-condensed">
+                                <table class="table table-condensed table-hover table-bordered table-striped  js-basic-example dataTable">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                <input type="checkbox" id="md_checkbox_3" class="chk-col-red"/>
-                                                <label for="md_checkbox_3">全选\全不选</label>
-                                            </th>
+                                            
                                             <th>ID</th>
                                             <th>类型名称</th>
                                             <th>别名</th>
@@ -57,18 +42,11 @@
                                     </thead>
                                     <tbody>
                                         @foreach($res as $k => $v)
-                                        <tr 
-                                            @if($k%5==0) class="bg-brown" 
-                                            @elseif($k%5==1) class="bg-cyan" 
-                                            @elseif($k%5==2) class="bg-teal"
-                                            @elseif($k%5==3) class="bg-blue-grey"
-                                            @else class="bg-light-green"
+
+                                        <tr @if($v->type_pid==0)  
+                                            style="font-size:16px;font-weight:bold"
                                             @endif
                                             >
-                                            <th>
-                                                <input type="checkbox" id="{{$v->type_id}}" class="chk-col-white" />
-                                                <label for="{{$v->type_id}}"></label>
-                                            </th>
                                             <td class="">
                                                 {{$v->type_id}}
                                             </td>
@@ -81,7 +59,6 @@
                                             <td class=" ">
                                                 {{$v->type_sort}}
                                             </td>
-                                           
                                             <td class=" ">
                                                 <a href="/admin/type/{{$v->type_id}}/edit" class='btn btn-info'>修改</a>
 
@@ -89,28 +66,19 @@
                                                     {{csrf_field()}}
                                                     {{method_field("DELETE")}}
                                                     <button class='btn btn-danger'>删除</button>
-
                                                 </form>
-                                                @if(substr_count($v->type_path,',')==1)
-                                                <a href="/admin/type/{{$v->type_id}}/edit" class='btn btn-warning'>添加</a>
-                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                              
                                 <div class="dataTables_paginate paging_full_numbers" id="DataTables_Table_1_paginate">
-                                    
                                     {{$res->appends($request->all())->links()}}
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
                 {{--主体内容结束--}}
             </div>
         </div>
@@ -118,7 +86,6 @@
 @stop
 @section('js')
 <script>
-    // alert($);
     $('.mws-form-message').delay(2000).fadeOut(2000);
 </script>
 @stop

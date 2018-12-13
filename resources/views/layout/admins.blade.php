@@ -26,6 +26,7 @@
     <link href="/admins/plugins/morrisjs/morris.css" rel="stylesheet" />
 
     <!-- Custom Css -->
+    <link href="/admins/plugins/dropzone/dropzone.css" rel="stylesheet">
     <link href="/admins/css/style.css" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
@@ -65,14 +66,14 @@
     </div>
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
-    <nav class="navbar">
-        <div class="container-fluid">
-            <div class="navbar-header">
+    <nav class="navbar" style="z-index: 10000">
+        <div class="container-fluid"  >
+            <div class="navbar-header" >
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="index.html">悦目视频后台管理系统</a>
             </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse">
+            <div class="collapse navbar-collapse" id="navbar-collapse" >
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
                     <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">搜索</i></a></li>
@@ -357,10 +358,10 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="pages/tables/normal-tables.html">添加视频</a>
+                                <a href="/admin/video/create">添加视频</a>
                             </li>
                             <li>
-                                <a href="pages/tables/normal-tables.html">视频列表</a>
+                                <a href="/admin/video">视频列表</a>
                             </li>
 
                         </ul>
@@ -403,10 +404,10 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="/admin/advert">留言列表</a>
+                                <a href="/admin/gbook">留言列表</a>
                             </li>
                              <li>
-                                <a href="/admin/advert">回复留言</a>
+                                <a href="/admin/gbook">回复留言</a>
                             </li>
                         </ul>
                     </li>

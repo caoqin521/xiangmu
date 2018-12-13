@@ -17,9 +17,10 @@ class TypeController extends Controller
     public function index(Request $request)
     {
         //
-         $res = Types::select(DB::raw('*,CONCAT(type_path,type_id) as paths'))->where('type_name','like','%'.$request->type_name.'%')->
-        orderBy('paths')->
-        paginate($request->input('num',20));
+         $res = Types::select(DB::raw('*,CONCAT(type_path,type_id) as paths'))
+         -> where('type_name','like','%'.$request->type_name.'%')
+         -> orderBy('paths')
+         -> paginate($request->input('num',20));
 
         foreach($res as $v){
             $ps = substr_count($v->type_path,',')-1;
@@ -56,13 +57,35 @@ class TypeController extends Controller
     {
         //
         $res = $request->except('_token','_method');
-        $res['type_path'] = '0,'.$res['type_pid'].',';
+        // dd($res);
+        if($res['type_pid']==0){
+            $res=[
+                'type_name'=>$res['type_name_d'],
+                'type_en'=>$res['type_en_d'],
+                'type_pid'=>'0',
+                'type_path'=>'0,'
+            ];
+            if(Types::create($res)){
+                return redirect('admin/type/create')->with('success','添加成功');
+            } else {
+                return redirect()->with('error','添加失败');
+            }
+        } else {
+            $res['type_path'] = '0,'.$res['type_pid'].',';
+            $res=[
+                'type_name'=>$res['type_name'],
+                'type_en'=>$res['type_en'],
+                'type_pid'=>$res['type_pid'],
+                'type_path'=>$res['type_path']
+            ];
         // dd($res);
         if(Types::create($res)){
             return redirect('admin/type')->with('success','添加成功');
         } else {
             return redirect()->with('error','添加失败');
         }
+        }
+        
     }
 
     /**
@@ -123,6 +146,7 @@ class TypeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // dd($request->input());
         $res = $request -> only('type_name');
 
         // dd($id);

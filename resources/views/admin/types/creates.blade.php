@@ -29,33 +29,35 @@
                            <input name="type_pid" value="{{$v->type_id}}" type="radio" id="{{$v->type_id}}" class="radio-col-red"/>
                             <label for="{{$v->type_id}}">{{$v->type_name}}</label>
                             @endforeach
-                            <input name="type_pid" value="111" type="radio" id="ding_111" class="radio-col-red"/>
+                            <input name="type_pid" value="0" type="radio" id="ding_111" class="radio-col-red"/>
                             <label for="ding_111">若自定义顶级分类请选择</label>
-                            <h2 class="card-inside-titl ziDing_h1e">自定义顶级分类</h2>
-
-                            <div class="row clearfix ziDing_d1">
+                            <div class="ziding_ding" id="ziding_ding">
+                            <h2 class="card-inside-title">自定义顶级分类</h2>
+                            <div class="row clearfix">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" placeholder="" name="type_name" value=""/>
+                                            <input type="text" class="form-control" placeholder="" name="type_name_d" value=""/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <h2 class="card-inside-title ziDing_h2">自定义顶级分类拼音名字</h2>
+                            <h2 class="card-inside-title">自定义顶级分类拼音名字</h2>
 
-                            <div class="row clearfix ziDing_d2" >
+                            <div class="row clearfix">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            <input type="text" class="form-control" placeholder="" name="type_en" value=""/>
+                                            <input type="text" class="form-control" placeholder="" name="type_en_d" value=""/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <h2 class="card-inside-title ">添加分类名称</h2>
+                        </div>
+                        <div class="ziding_fen" id="ziding_fen">
+                            <h2 class="card-inside-title">添加分类名称</h2>
 
-                            <div class="row clearfix ">
+                            <div class="row clearfix">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="form-line">
@@ -77,7 +79,7 @@
                                 </div>
                                 
                             </div>
-                            
+                            </div>
                             <div class="mws-button-row">
                                 {{csrf_field()}}
 
@@ -100,12 +102,7 @@
         </div>
     </section>
     <style>
-        .ziDing_h1{
-            display:none;
-        }
-        .ziDing_d1{
-            display:none;
-        }
+        .ziding_ding{display:none;}
     </style>
 @stop
 @section('js')
@@ -113,7 +110,13 @@
     // alert($);
     $('.mws-form-message').delay(2000).fadeOut(2000);
     $('#ding_111').click(function(){
-
+        $('#ziding_ding').removeAttr('class');
+        $('#ziding_fen').attr('class','ziding_ding');
     })
+    $(':radio').not('#ding_111').click(function(){
+        $('#ziding_ding').attr('class','ziding_ding');
+        $('#ziding_fen').removeAttr('class');
+    })
+
 </script>
 @stop
