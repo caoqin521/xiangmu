@@ -63,7 +63,6 @@
                                                 <tbody>
                                                     @foreach($rs as $k => $v)
                                                     <tr>
-                                                        
                                                         <td>{{$v->gbook_id}}</td>
                                                         <td>{{$v->gbook_user_id}}</td>
                                                         <td>{{$v->user_name}}</td>
@@ -71,12 +70,11 @@
                                                         <td>{{$v->gbook_time}}</td>
                                                         <td>{{$v->gbook_user_ip}}</td>
                                                         <td style="width:200px">
-                                                            <form action="/admin/video/" method='post' style='display:inline'>
+                                                            <form action="/admin/gbook/{{$v->gbook_id}}" method='post' style='display:inline'>
                                                                 {{csrf_field()}}
                                                                 {{method_field("DELETE")}}
                                                                 <button class='btn btn-danger' style="box-shadow: none">删除</button>
                                                             </form>
-                                                            <a href="/admin/video/" class='btn btn-warning' style="box-shadow: none">编辑</a>
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -100,21 +98,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($res as $k => $v)
+                                                    @foreach($res as $ks => $vs)
                                                     <tr>
-                                                        <td>{{$v->user_name}}</td>
-                                                        <td>{{$v->mname}}</td>
-                                                        <td>{{$v->id}}</td>
-                                                        <td>{{$v->replay_id}}</td>
-                                                        <td>{{$v->gbook_replay_id}}</td>
-                                                        <td>{{$v->admin_replay}}</td>
+                                                        <td>{{$vs->user_name}}</td>
+                                                        <td>{{$vs->mname}}</td>
+                                                        <td>{{$vs->id}}</td>
+                                                        <td>{{$vs->replay_id}}</td>
+                                                        <td>{{$vs->gbook_replay_id}}</td>
+                                                        <td>{{$vs->admin_replay}}</td>
                                                         <td style="width:150px">
-                                                            <form action="/admin/video/" method='post' style='display:inline'>
+                                                            <form action="/admin/agreplay/{{$vs->replay_id}}" method='post' style='display:inline'>
                                                                 {{csrf_field()}}
                                                                 {{method_field("DELETE")}}
                                                                 <button class='btn btn-danger' style="box-shadow: none">删除</button>
                                                             </form>
-                                                            <a href="/admin/video/" class='btn btn-warning' style="box-shadow: none">编辑</a>
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -125,12 +122,13 @@
                                             </div>
                                         </div>
                                         <div role="tabpanel" class="tab-pane animated fadeInRight" id="messages_animation_2">
-                                      
+                                       <form action="/admin/agreplay" method="post">
+                                           
                                             <div class="col-md-3">
                                              
                                                     <b>给谁回复：</b>
                                                
-                                                <select class="form-control show-tick" multiple data-selected-text-format="count" name="user_id" >
+                                                <select class="form-control show-tick" multiple data-selected-text-format="count" name="user_id[]" >
                                                     @foreach($rss as $ks => $vss)
                                                     <option value="{{$vss->user_id}}">{{$vss->user_name}}</option>
                                                     @endforeach
@@ -139,8 +137,10 @@
                                             <div class="col-md-3"></div>
                                             <div class="col-md-3"></div>
                                             <div class="col-md-3"></div>
-
+                                            <!-- <div col-md-12></div> -->
                                             <div class="col-md-12">
+                                               
+                                                    
                                                 <p>
                                                     <b>回复内容</b>
                                                 </p>
@@ -150,14 +150,20 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
                                                             <div class="form-line">
-                                                                <textarea rows="4" class="form-control no-resize" placeholder="在此写入您要回复用户的内容。。。"></textarea>
+                                                                <textarea rows="4" class="form-control no-resize" placeholder="在此写入您要回复用户的内容。。。" name="admin_replay"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
+                                            </div>
+                                                     {{csrf_field()}}
+                                            {{method_field("post")}}
 
+                                            <button class='btn btn-danger'>修改</button>
                                             </div>
-                                            </div>
+
+                                        </form>
                                         </div>
                                         <div role="tabpanel" class="tab-pane animated fadeInRight" id="settings_animation_2">
                                             <b>Settings Content</b>

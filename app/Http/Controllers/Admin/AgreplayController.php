@@ -4,43 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Admin\Agreplay;
 use DB;
-use App\Model\Admin\Gbook;
 
-class GbookController extends Controller
+class AgreplayController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $rs = DB::table('gbook')
-        ->join('user','user_id','=','gbook_user_id')
-        ->select('user.user_name','user.user_id','gbook.*')
-        ->paginate($request->input('num',10));
-        $rss=DB::table('user')->select('user_id','user_name')->get();
-        // dd($rss);
-        $res = DB::table('admin_gbook_replay')
-        ->join('user','user.user_id','=','admin_gbook_replay.user_id')
-        ->join('admin','admin.id','=','admin_gbook_replay.admin_id')
-        ->select('user.user_id','user.user_name','admin.id','admin.mname','admin_gbook_replay.*')
-        ->paginate($request->input('num',10));
-        // $res = DB::table('gbook')
-        // ->join('user','user_id','=','gbook_user_id')
-        // ->join('admin','admin.id','=','gbook.gbook_admin_id')
-        // ->join('admin_gbook_replay','admin_gbook_replay.gbook_replay_id','=','gbook.gbook_id')
-        // ->select('user.user_name','admin.mname','admin.id','admin.admin_gbook_replay','admin.admin_gbook_id','gbook.*','admin_gbook_replay.replay_id','admin_gbook_replay.gbook_replay_id','admin_gbook_replay.admin_replay')
-        // ->paginate($request->input('num',5));
-        // dd($res);
-        return view('admin/gbook/gbooks',
-            ['title'=>'留言管理',
-            'res'=>$res,
-            'request'=>$request,
-            'rs'=>$rs,
-            'rss'=>$rss
-        ]);
+        //
     }
 
     /**
@@ -62,6 +38,28 @@ class GbookController extends Controller
     public function store(Request $request)
     {
         //
+        $res = $request->post();
+        if(is_array($res['user_id'])){
+            $data = '';
+            for($i = 0; $i < count($res['user_id']); $i++){
+                $ress = ['user_id'=>$res['user_id'][$i], 'admin_replay'=>$res['admin_replay']];
+                $data = Agreplay::create($ress);
+            }
+            if($data){
+                return redirect('admin/gbook')->with('success','添加成功');
+            } else {
+                return redirect()->with('error','添加失败');
+            }
+        } else {
+            $ress = ['user_id'=>$res['user_id'], 'admin_replay'=>$res['admin_replay']];
+             // dd(Agreplay::create($ress));
+            if(Agreplay::create($ress)){
+            return redirect('admin/gbook')->with('success','添加成功');
+            } else {
+                return redirect()->with('error','添加失败');
+            }
+        }
+        
     }
 
     /**
@@ -96,6 +94,8 @@ class GbookController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // dd($request->post());
+        echo '11111111111';
     }
 
     /**
@@ -106,16 +106,18 @@ class GbookController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $a = Gbook::where('gbook_id',$id)->delete();
+        // //
+        // // echo $id;
+        // // $a = DB::table('admin_gbook_replay')->where('replay_id',$id)->delete();
+        // $a = Agreplay::where('replay_id','2')->select()->get();
         // dd($a);
         try{
-                
+                $a = Agreplay::where('replay_id',$id)->delete();
                 if($a){
                     return redirect('/admin/gbook')->with('success','删除成功');
                 }
             } catch(\Exception $e){
                 return back()->with('error','删除失败');
             }
-    }
+   }
 }

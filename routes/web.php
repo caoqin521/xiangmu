@@ -41,7 +41,8 @@ Route::resource('/admin/type','Admin\TypeController');
 //留言管理
 // Route::resource('/admin/advert','Admin\AdvertController');
 Route::resource('/admin/gbook','Admin\GbookController');
-
+//回复留言
+Route::resource('/admin/agreplay','Admin\AgreplayController');
 
 
 
